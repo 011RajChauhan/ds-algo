@@ -10,11 +10,13 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) {
+        //initialize arr with n objects
         QuickUnion quickUnion = new QuickUnion(5);
-        //first check if all objects are connected in array if not ask for objets to connect
+
+        //check if all objects are connected in array if not ask for objets to connect
         while (!isAllConnected(quickUnion)) {
-            System.out.println("\n\nObjects not fully connected to \nenter number to check if they are connected\n" +
-                    "if not then it will get connected using union\n");
+            System.out.println("\n\nObjects not fully connected \nEnter number to check if they are connected.\n" +
+                    "if they are not connected then it will get connected using union operation\n");
 
             int p;
             int q;
@@ -30,12 +32,14 @@ public class Main {
             if (isObjectValid(p, q, quickUnion)) {
                 System.out.printf("finding if %s and %s are connected objects.%n%n", p, q);
 
-                if (quickUnion.findRootAndIfNotSameThenConnectObjects(p, q)) {
+                if (quickUnion.connected(p, q)) {
                     System.out.printf("%s and %s are connected objects", p, q);
+                } else {
+                    quickUnion.union(p, q);
                 }
                 quickUnion.showItems();
             } else {
-                System.out.printf("please check if %s OR %s are valid objects. Objects should be less then %s ", p, q, quickUnion.numberOfObjects);
+                System.out.printf("please check if %s OR %s are valid objects. Objects should be less then %s ", p, q, quickUnion.n);
             }
         }
         System.out.println("CONGRATULATION ! ALL OBJECTS CONNECTED...");
@@ -43,14 +47,14 @@ public class Main {
     }
 
     public static boolean isObjectValid(int p, int q, QuickUnion quickUnion) {
-        return p < quickUnion.numberOfObjects && q < quickUnion.numberOfObjects;
+        return p < quickUnion.n && q < quickUnion.n;
     }
 
     public static boolean isAllConnected(QuickUnion quickUnion) {
         boolean result = true;
-        int connectingIndex = quickUnion.arr[0];
-        for (int i = 1; i < quickUnion.numberOfObjects; i++) {
-            if (quickUnion.arr[i] != connectingIndex) {
+        int commonParent = quickUnion.root(0);
+        for (int i = 1; i < quickUnion.n; i++) {
+            if (commonParent!=quickUnion.root(i)) {
                 result = false;
                 break;
             }

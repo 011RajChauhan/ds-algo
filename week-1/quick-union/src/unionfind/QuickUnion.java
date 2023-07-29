@@ -9,13 +9,13 @@ package unionfind;
  * will mimic as object whereas the actual value will mimic as index.
  * values will be equalized to connect all the objects.
  * <p>
- * given two objects p & q this DS technique will findRootAndIfNotSameThenConnectObjects
+ * given two objects p & q this DS technique will connected
  * if they have common root (parent) If not it will
  * replace the parent of p from that of q
  */
 public class QuickUnion {
     int[] arr;
-    int numberOfObjects;
+    int n;
 
     int pRoot;
     int qRoot;
@@ -26,10 +26,10 @@ public class QuickUnion {
      * @param n number of objects
      */
     public QuickUnion(int n) {
-        numberOfObjects = n;
-        arr = new int[numberOfObjects];
+        this.n = n;
+        arr = new int[this.n];
         // n Array access - set id of each object to itself
-        for (int i = 0; i < numberOfObjects; i++) {
+        for (int i = 0; i < this.n; i++) {
             arr[i] = i;
         }
         showItems();
@@ -50,31 +50,24 @@ public class QuickUnion {
     }
 
     /**
-     * <b>findRootAndIfNotSameThenConnectObjects</b> method to check if two objects are connected
+     * <b>connected</b> method to check if two objects are connected
+     * by backtracking their parent and find if they are similar
      *
      * @param p 1st object
      * @param q 2nd object
      * @return {@link Boolean} true if objects are connected and false if not.
      */
-    boolean findRootAndIfNotSameThenConnectObjects(int p, int q) {
-        boolean findResult = false;
-        try {
-            //todo : need to check this assumption
-            //worst case n*n access
-            if (root(p) == root(q)) {
-                findResult = true;
-            } else {
-                union(p, q);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("list does not contain the supplied objects");
-        }
-        return findResult;
+
+    boolean connected(int p, int q) {
+        //TODO : need to check this assumption
+        //worst case n*n access
+        return root(p) == root(q);
     }
 
     void union(int p, int q) {
-        System.out.println("%s and $s were not connect, now connected.");
         // 1 array access
+        pRoot = root(p);
+        qRoot = root(q);
         arr[p] = qRoot;
     }
 
@@ -83,11 +76,11 @@ public class QuickUnion {
      */
     void showItems() {
         System.out.println("\nObject state\n");
-        for (int i = 0; i < numberOfObjects; i++) {
+        for (int i = 0; i < n; i++) {
             System.out.print("|" + arr[i]);
         }
         System.out.print("|\n");
-        for (int i = 0; i < numberOfObjects; i++) {
+        for (int i = 0; i < n; i++) {
             System.out.print("|" + i);
         }
         System.out.print("|");
