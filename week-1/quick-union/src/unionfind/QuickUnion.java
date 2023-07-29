@@ -1,4 +1,4 @@
-package dynamicconnectivity;
+package unionfind;
 
 /**
  * @author Rajan Chauhan
