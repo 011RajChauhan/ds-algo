@@ -13,8 +13,6 @@ public class QuickFind {
     int[] arr;
     int numberOfObjects;
 
-    int pIndex;
-    int qIndex;
 
     /**
      * Constructor for {@link QuickFind}
@@ -54,21 +52,17 @@ public class QuickFind {
      * @return {@link Boolean} true if objects are connected and false if not.
      */
     boolean find(int p, int q) {
-        boolean findResult = false;
-        try {
-            //2 array access but constant
-            pIndex = arr[p];
-            qIndex = arr[q];
+        //2 array access but constant
+        int pIndex = arr[p];
+        int qIndex = arr[q];
 
-            findResult = pIndex == qIndex;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("list does not contain the supplied objects");
-        }
-        return findResult;
+        return pIndex == qIndex;
     }
 
     void union(int p, int q) {
         // 2N array access
+        int pIndex = arr[p];
+        int qIndex = arr[q];
         for (int i = 0; i < numberOfObjects; i++) {
             if (arr[i] == qIndex) {
                 arr[i] = pIndex;
